@@ -12,26 +12,74 @@ namespace ip
         {
             Console.WriteLine("Enter an IP address in decimal (tamplate *.*.*.*)    ");
             string ipAddress = Console.ReadLine();
-            int[] OctetsIP = ipStringToOctats(ipAddress);
-            int[] dp = new int[] { 192, 168, 10, 5 };
-            Convert_dp_to_binario(dp);
+            string binaryIP = Convert_dp_to_binario(ipAddress);
+            Console.WriteLine(binaryIP);
             Console.ReadLine();
         }
-
-        static int[] ipStringToOctats(string ip)
+        static int[] SplitIP(string ipString)
         {
-            string[] oct = ip.Split('.');
-            int[] octets = Array.ConvertAll(oct, int.Parse);
-            return octets;
+            string[] ip = ipString.Split('.');
+            int[] result = new int[ip.Length];
+            for (int i = 0; i < ip.Length; i++)
+            {
+                if (int.TryParse(ip[i], out int parsedValue))
+                {
+                    result[i] = parsedValue;
+                }
+                else
+                {
+                    Console.WriteLine("error");
+                    
+                }
+            }
+            return result;
         }
-        static void Convert_dp_to_binario(int[] dp)
+        static string Convert_dp_to_binario(string ip)
         {
+            int[] octets = SplitIP(ip);
+            //Console.WriteLine(octets.Length);
+            if (octets.Length != 4)
+            {
+                return "Ip address entered wrong";
+            }
+            for (int i = 0; i < octets.Length; i++)
+            {
+                int octet = Convert.ToInt32(octets[i]);
+                
+                string binary = "";
+                while (octet > 0)
+                {
+                    int remainder = octet % 2;
+                    binary = remainder + binary;
+                    octet /= 2;
+                }
 
-            
+                while (binary.Length < 8)
+                {
+                    binary = "0" + binary;
+                }
+                octets[i] = binary;
+                //Console.WriteLine(octets[i]);
+            }
+            string binaryIP = string.Join(".", octets); ;
+
+            return binaryIP;
         }
+        /*static string DecimalToBinary(int decimalNumber)
+        {
+            string binary = "";
+            while (decimalNumber > 0)
+            {
+                int remainder = decimalNumber % 2;
+                binary = remainder + binary;
+                decimalNumber /= 2;
+            }
 
-        
-        
-
+            while (binary.Length < 8)
+            {
+                binary = "0" + binary;
+            }
+            return binary;
+        }*/
     }
 }
