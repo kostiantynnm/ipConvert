@@ -11,11 +11,10 @@ namespace ip
         static void Main()
         {
             Console.WriteLine("Enter an IP address in decimal (tamplate *.*.*.*)    ");
-            string ipAddress = Console.ReadLine();
-            int[] ip = SplitIP(ipAddress);
-            Console.WriteLine(ConvertDpToIntero(ip));
-            ConvertDpToBinario(ip);
-            Console.ReadLine();
+            int[] ip = SplitIP(Console.ReadLine());
+            //Console.WriteLine(ConvertDpToIntero(ip));
+            //ConvertDpToBinario(ip);
+            //Console.ReadLine();
         }
 
         static bool[] ConvertDpToBinario(int[] dp)
@@ -53,6 +52,20 @@ namespace ip
             return result;
         }
         
+        static Int64 ConvertBinarioToIntero(bool[] bn)
+        {
+            Int64 result = 0;
+            for(int i = 31; i >= 0; i--)
+            {
+                if (bn[i])
+                {
+                    result += (Int64)Math.Pow(2, i);
+                }
+            }
+
+            return result;
+        }
+
         
         static Int64 ConvertDpToIntero(int[] dp)
         {
